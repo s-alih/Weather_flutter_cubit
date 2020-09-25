@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/weather_cubit.dart';
+// import '../cubit/weather_cubit.dart';
 import '../data/models/weather.dart';
+import '../bloc/weather_bloc.dart';
 
 class WeatherSearch extends StatelessWidget {
   const WeatherSearch({Key key}) : super(key: key);
@@ -17,7 +18,7 @@ class WeatherSearch extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           vertical: 16,
         ),
-        child: BlocConsumer<WeatherCubit, WeatherState>(
+        child: BlocConsumer<WeatherBloc, WeatherState>(
           builder: (context, state) {
             if (state is WeatherInitial) {
               return buildInitialInput();
@@ -96,7 +97,7 @@ class CityInputField extends StatelessWidget {
   }
 
   void submitCityName(BuildContext context, String cityName) {
-    final weatherCubit = context.bloc<WeatherCubit>();
-    weatherCubit.getWeather(cityName);
+    final weatherBloc = context.bloc<WeatherBloc>();
+    weatherBloc.add(GetWeather(cityName));
   }
 }
